@@ -28,10 +28,31 @@ public final class ResourceBunchExtractor {
 
 	public static void extract(String bunchName, File targetDirectory) throws IOException {
 
-		extract(DEFAULT_BUNCH_DESCRIPTOR, bunchName, targetDirectory);
+		extract(DEFAULT_BUNCH_DESCRIPTOR, bunchName, targetDirectory, bunchName + "/");
+	}
+
+	public static void extract(String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
+
+		extract(DEFAULT_BUNCH_DESCRIPTOR, bunchName, targetDirectory, resourcePrefix);
 	}
 
 	public static void extract(String descriptorName, String bunchName, File targetDirectory) throws IOException {
+
+		extract(descriptorName, bunchName, targetDirectory, bunchName + "/");
+	}
+
+	public static void extract(
+			String descriptorName, String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
+
+		if (resourcePrefix == null) {
+
+			resourcePrefix = "";
+		}
+
+		if (!resourcePrefix.isEmpty() && !resourcePrefix.endsWith("/")) {
+
+			resourcePrefix = resourcePrefix + "/";
+		}
 
 		Enumeration<URL> resources = ResourceBunchExtractor.class.getClassLoader().getResources(descriptorName);
 
@@ -61,13 +82,20 @@ public final class ResourceBunchExtractor {
 
 		for (String resourceToExtract : resourcesToExtract) {
 
-			File targetFile = new File(targetDirectory, resourceToExtract);
+			if (!resourceToExtract.startsWith(resourcePrefix)) {
+
+				continue;
+			}
+
+			File targetFile = new File(targetDirectory, resourceToExtract.substring(resourcePrefix.length()));
 
 			targetFile.getParentFile().mkdirs();
 
-			try (OutputStream target = new FileOutputStream(targetFile);
-			     InputStream source = ResourceBunchExtractor.class.getClassLoader().
-					     getResourceAsStream(resourceToExtract)) {
+			try (
+					OutputStream target = new FileOutputStream(targetFile);
+					InputStream source =
+							ResourceBunchExtractor.class.getClassLoader().getResourceAsStream(resourceToExtract)
+			) {
 
 				byte[] buffer = new byte[BUFFER_SIZE];
 

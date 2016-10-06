@@ -1,12 +1,5 @@
 package com.github.resource.bunch;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * This goal packs the specified resource files to the output directory and lists their names in a properties file.
@@ -60,7 +60,27 @@ public class ResourceBunchMojo extends AbstractMojo {
 				continue;
 			}
 
-			storeBunch(resource, outputDirectory, resources);
+			File targetDirectory = new File(outputDirectory, entry.getKey());
+
+			if (resource.isDirectory()) {
+
+				File[] subFiles = resource.listFiles();
+
+				if (subFiles == null) {
+
+					return;
+				}
+
+				for (File subFile : subFiles) {
+
+					storeBunch(subFile, targetDirectory, resources);
+				}
+
+
+			} else {
+
+				storeBunch(resource, targetDirectory, resources);
+			}
 
 		}
 
@@ -90,7 +110,7 @@ public class ResourceBunchMojo extends AbstractMojo {
 		}
 
 		try (OutputStream target =
-				     new FileOutputStream(new File(outputDirectory, bunchDescriptorResource))) {
+					 new FileOutputStream(new File(outputDirectory, bunchDescriptorResource))) {
 
 			bunchDescriptor.store(target, null);
 
@@ -166,7 +186,7 @@ public class ResourceBunchMojo extends AbstractMojo {
 		File targetFileName = new File(targetDirectory, resource.getName());
 
 		try (InputStream input = new FileInputStream(resource);
-		     OutputStream target = new FileOutputStream(targetFileName)) {
+			 OutputStream target = new FileOutputStream(targetFileName)) {
 
 			byte[] buffer = new byte[BUFFER_SIZE];
 
