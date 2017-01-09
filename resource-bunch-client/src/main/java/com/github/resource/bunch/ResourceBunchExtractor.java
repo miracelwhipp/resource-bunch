@@ -21,28 +21,25 @@ public final class ResourceBunchExtractor {
 
 	public static final String DEFAULT_BUNCH_DESCRIPTOR = "resource.bunch.properties";
 	public static final String RESOURCE_SEPARATOR = ",";
-	public static final int BUFFER_SIZE = 128 * 1024;
 
-	private ResourceBunchExtractor() {
+	private static final int BUFFER_SIZE = 128 * 1024;
+	private static final ResourceBunchExtractor DEFAULT_EXTRACTOR =
+			newInstance(DEFAULT_BUNCH_DESCRIPTOR, ResourceBunchExtractor.class.getClassLoader());
+
+	private final String bunchDescriptor;
+	private final ClassLoader classLoader;
+
+	private ResourceBunchExtractor(String bunchDescriptor, ClassLoader classLoader) {
+		this.bunchDescriptor = bunchDescriptor;
+		this.classLoader = classLoader;
 	}
 
-	public static void extract(String bunchName, File targetDirectory) throws IOException {
+	public void extractResource(String bunchName, File targetDirectory) throws IOException {
 
-		extract(DEFAULT_BUNCH_DESCRIPTOR, bunchName, targetDirectory, bunchName + "/");
+		extractResource(bunchName, targetDirectory, bunchName + "/");
 	}
 
-	public static void extract(String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
-
-		extract(DEFAULT_BUNCH_DESCRIPTOR, bunchName, targetDirectory, resourcePrefix);
-	}
-
-	public static void extract(String descriptorName, String bunchName, File targetDirectory) throws IOException {
-
-		extract(descriptorName, bunchName, targetDirectory, bunchName + "/");
-	}
-
-	public static void extract(
-			String descriptorName, String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
+	public void extractResource(String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
 
 		if (resourcePrefix == null) {
 
@@ -54,7 +51,9 @@ public final class ResourceBunchExtractor {
 			resourcePrefix = resourcePrefix + "/";
 		}
 
-		Enumeration<URL> resources = ResourceBunchExtractor.class.getClassLoader().getResources(descriptorName);
+		resourcePrefix = bunchName + "/" + resourcePrefix;
+
+		Enumeration<URL> resources = classLoader.getResources(bunchDescriptor);
 
 		List<String> resourcesToExtract = new ArrayList<>();
 
@@ -89,7 +88,7 @@ public final class ResourceBunchExtractor {
 
 			File targetFile = new File(targetDirectory, resourceToExtract.substring(resourcePrefix.length()));
 
-			targetFile.getParentFile().mkdirs();
+			createDirectory(targetFile.getParentFile());
 
 			try (
 					OutputStream target = new FileOutputStream(targetFile);
@@ -107,6 +106,54 @@ public final class ResourceBunchExtractor {
 				}
 			}
 		}
+
+
+	}
+
+	private void createDirectory(File parentFile) throws IOException {
+
+		if (parentFile.exists()) {
+
+			if (parentFile.isDirectory()) {
+
+				return;
+			}
+
+			throw new IOException("extraction directory exists and is a file: " + parentFile.getAbsolutePath());
+		}
+
+		if (!parentFile.mkdirs()) {
+
+			throw new IOException("unable to create directory " + parentFile.getAbsolutePath());
+		}
+	}
+
+	public static ResourceBunchExtractor newInstance(String bunchDescriptor, ClassLoader classLoader) {
+
+		return new ResourceBunchExtractor(bunchDescriptor, classLoader);
+	}
+
+	public static void extract(String bunchName, File targetDirectory) throws IOException {
+
+		DEFAULT_EXTRACTOR.extractResource(bunchName, targetDirectory);
+	}
+
+	public static void extract(String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
+
+		DEFAULT_EXTRACTOR.extractResource(bunchName, targetDirectory, resourcePrefix);
+	}
+
+	public static void extract(String descriptorName, String bunchName, File targetDirectory) throws IOException {
+
+		newInstance(descriptorName, ResourceBunchExtractor.class.getClassLoader()).
+				extractResource(bunchName, targetDirectory);
+	}
+
+	public static void extract(
+			String descriptorName, String bunchName, File targetDirectory, String resourcePrefix) throws IOException {
+
+		newInstance(descriptorName, ResourceBunchExtractor.class.getClassLoader()).
+				extractResource(bunchName, targetDirectory, resourcePrefix);
 	}
 
 
