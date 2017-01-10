@@ -19,12 +19,9 @@ import java.util.Properties;
  */
 public final class ResourceBunchExtractor {
 
-	public static final String DEFAULT_BUNCH_DESCRIPTOR = "resource.bunch.properties";
-	public static final String RESOURCE_SEPARATOR = ",";
-
 	private static final int BUFFER_SIZE = 128 * 1024;
 	private static final ResourceBunchExtractor DEFAULT_EXTRACTOR =
-			newInstance(DEFAULT_BUNCH_DESCRIPTOR, ResourceBunchExtractor.class.getClassLoader());
+			newInstance(ResourceBunchMetadata.DEFAULT_BUNCH_DESCRIPTOR, ResourceBunchExtractor.class.getClassLoader());
 
 	private final String bunchDescriptor;
 	private final ClassLoader classLoader;
@@ -75,7 +72,7 @@ public final class ResourceBunchExtractor {
 				continue;
 			}
 
-			resourcesToExtract.addAll(Arrays.asList(resourceListString.split(RESOURCE_SEPARATOR)));
+			resourcesToExtract.addAll(Arrays.asList(resourceListString.split(ResourceBunchMetadata.RESOURCE_SEPARATOR)));
 		}
 
 

@@ -34,6 +34,8 @@
 	<modules>
 		<module>resource-bunch-maven-plugin</module>
 		<module>resource-bunch-client</module>
+		<module>resource-bunch-common</module>
+		<module>resource-bunch-collector</module>
 	</modules>
 
 	<build>
