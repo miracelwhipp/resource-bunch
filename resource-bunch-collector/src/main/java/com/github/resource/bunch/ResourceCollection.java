@@ -98,7 +98,7 @@ public class ResourceCollection {
 		}
 	}
 
-	public static ResourceCollection scanResource(String collectionName, File resource) {
+	public static ResourceCollection scanResource(String collectionName, File resource, Filter filter) {
 
 		if (!resource.exists()) {
 
@@ -118,24 +118,28 @@ public class ResourceCollection {
 
 			for (File subFile : subFiles) {
 
-				storeBunch(subFile, resource.getAbsoluteFile().toPath(), resources);
+				storeBunch(subFile, resource.getAbsoluteFile().toPath(), filter, resources);
 			}
 
 
 		} else {
 
-			storeBunch(resource, resource.getParentFile().getAbsoluteFile().toPath(), resources);
+			storeBunch(resource, resource.getParentFile().getAbsoluteFile().toPath(), filter, resources);
 		}
 
 
 		return new ResourceCollection(collectionName, resources, resource);
 	}
 
-	private static void storeBunch(File resource, Path rootDirectory, List<String> resources) {
+	private static void storeBunch(File resource, Path rootDirectory, Filter filter, List<String> resources) {
 
 		if (!resource.isDirectory()) {
 
-			resources.add(rootDirectory.relativize(resource.getAbsoluteFile().toPath()).toString());
+			if (filter.matches(resource.toString())) {
+
+				resources.add(rootDirectory.relativize(resource.getAbsoluteFile().toPath()).toString());
+			}
+
 
 			return;
 		}
@@ -150,7 +154,7 @@ public class ResourceCollection {
 
 		for (File subFile : subFiles) {
 
-			storeBunch(subFile, rootDirectory, resources);
+			storeBunch(subFile, rootDirectory, filter, resources);
 		}
 
 	}

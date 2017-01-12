@@ -2,6 +2,8 @@ package com.github.resource.bunch;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -28,10 +30,28 @@ public class ResourceBunchMojo extends AbstractMojo {
 	@Parameter(property = "project.build.outputDirectory", readonly = true)
 	private File outputDirectory;
 
+	@Parameter
+	private List<String> includes;
+
+	@Parameter
+	private List<String> excludes;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
+		if (includes == null) {
+
+			includes = Collections.emptyList();
+		}
+
+		if (excludes == null) {
+
+			excludes = Collections.emptyList();
+		}
+
 		ResourceScanner scanner = ResourceCollector.scan();
+
+		Filter filter = Filter.fromAntPattern(includes, excludes);
 
 		for (Map.Entry<String, String> entry : resources.entrySet()) {
 
@@ -46,7 +66,7 @@ public class ResourceBunchMojo extends AbstractMojo {
 				continue;
 			}
 
-			scanner.scan(entry.getKey(), resource);
+			scanner.scan(entry.getKey(), resource, filter);
 		}
 
 		ResourceCollector collector = scanner.newCollector();

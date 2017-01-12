@@ -16,7 +16,12 @@ public class ResourceScanner {
 
 	public ResourceScanner scan(String name, File resource) {
 
-		collections.add(ResourceCollection.scanResource(name, resource));
+		return scan(name, resource, Filter.ALL);
+	}
+
+	public ResourceScanner scan(String name, File resource, Filter filter) {
+
+		collections.add(ResourceCollection.scanResource(name, resource, filter));
 
 		return this;
 	}
