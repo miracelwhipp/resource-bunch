@@ -9,7 +9,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -29,6 +31,39 @@ public final class ResourceBunchExtractor {
 	private ResourceBunchExtractor(String bunchDescriptor, ClassLoader classLoader) {
 		this.bunchDescriptor = bunchDescriptor;
 		this.classLoader = classLoader;
+	}
+
+	public Map<String, String> getResourceProperties() throws IOException {
+
+		Enumeration<URL> resources = classLoader.getResources(bunchDescriptor);
+
+		Properties result = new Properties();
+
+		while (resources.hasMoreElements()) {
+
+			URL resource = resources.nextElement();
+
+			result = new Properties(result);
+
+			try (InputStream source = resource.openStream()) {
+
+				result.load(source);
+			}
+
+		}
+
+		HashMap<String, String> map = new HashMap<>();
+
+		Enumeration<?> enumeration = result.propertyNames();
+
+		while (enumeration.hasMoreElements()) {
+
+			String name = (String) enumeration.nextElement();
+
+			map.put(name, result.getProperty(name));
+		}
+
+		return map;
 	}
 
 	public void extractResource(String bunchName, File targetDirectory) throws IOException {

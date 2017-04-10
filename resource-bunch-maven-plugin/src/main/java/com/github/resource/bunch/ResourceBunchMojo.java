@@ -36,6 +36,13 @@ public class ResourceBunchMojo extends AbstractMojo {
 	@Parameter
 	private List<String> excludes;
 
+	/**
+	 * This parameter adds custom meta data to the bunch created.
+	 */
+	@Parameter
+	private Map<String, String> properties;
+
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 

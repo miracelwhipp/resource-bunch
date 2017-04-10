@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -17,9 +19,20 @@ import java.util.Properties;
 public class ResourceCollector {
 
 	private final List<ResourceCollection> collections;
+	private final Map<String, String> properties = new HashMap<>();
 
 	public ResourceCollector(List<ResourceCollection> collections) {
 		this.collections = collections;
+	}
+
+	public void addProperty(String name, String value) {
+
+		properties.put(name, value);
+	}
+
+	public void addProperties(Map<String, String> properties) {
+
+		this.properties.putAll(properties);
 	}
 
 	public File collect(String descriptorName, File targetPath) throws IOException {
