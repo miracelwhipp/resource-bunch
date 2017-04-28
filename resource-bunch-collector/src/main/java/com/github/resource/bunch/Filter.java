@@ -17,7 +17,7 @@ public class Filter {
 
 	public static final Filter ALL = new Filter(Collections.<String>emptyList(), Collections.<String>emptyList());
 
-	private static final String QUOTED_FILE_SEPARATOR = (File.separator.equals("\\")) ? "\\\\" : "/";
+	public static final String QUOTED_FILE_SEPARATOR = (File.separator.equals("\\")) ? "\\\\" : "/";
 
 	private final List<String> includes;
 	private final List<String> excludes;
@@ -65,8 +65,6 @@ public class Filter {
 
 		String result = include;
 
-		String q = QUOTED_FILE_SEPARATOR;
-
 		result = result.replaceAll("\\\\|/", QUOTED_FILE_SEPARATOR);
 		result = Pattern.quote(result);
 		result = result.replaceAll(Pattern.quote("**"), "\\\\E?\\\\Q");
@@ -96,6 +94,16 @@ public class Filter {
 		return result;
 	}
 
+	public Filter append(Filter filter) {
+
+		List<String> newIncludes = new ArrayList<>(includes);
+		newIncludes.addAll(filter.getIncludes());
+
+		List<String> newExcludes = new ArrayList<>(excludes);
+		newExcludes.addAll(filter.getExcludes());
+
+		return new Filter(newIncludes, newExcludes);
+	}
 
 	public boolean matches(String text) {
 

@@ -39,6 +39,8 @@ public class ResourceCollector {
 
 		Properties properties = new Properties();
 
+		properties.putAll(this.properties);
+
 		for (ResourceCollection collection : collections) {
 
 			List<String> resources = collection.collect(targetPath);
