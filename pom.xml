@@ -15,7 +15,7 @@
 		<release.repository.id>default-repository</release.repository.id>
 		<release.repository.name>${release.repository.id}</release.repository.name>
 		<snapshot.repository.id>${release.repository.id}</snapshot.repository.id>
-		<snapshot.repository.name>${release.repository.name}</snapshot.repository.name>
+		<snapshot.repository.name>${snapshot.repository.id}</snapshot.repository.name>
 	</properties>
 
 	<scm>
