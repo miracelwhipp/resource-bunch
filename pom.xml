@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.resources</groupId>
@@ -9,6 +10,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<release.repository.url>${repository-url}/releases</release.repository.url>
+		<snapshot.repository.url>${repository-url}/snapshots</snapshot.repository.url>
 	</properties>
 
 	<scm>
@@ -22,12 +25,12 @@
 		<repository>
 			<id>default-repository</id>
 			<name>default-repository</name>
-			<url>${repository-url}/releases</url>
+			<url>${release.repository.url}</url>
 		</repository>
 		<snapshotRepository>
 			<id>default-repository</id>
 			<name>default-repository</name>
-			<url>${repository-url}/snapshots</url>
+			<url>${snapshot.repository.url}</url>
 		</snapshotRepository>
 	</distributionManagement>
 
