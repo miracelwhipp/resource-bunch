@@ -4,7 +4,7 @@
 
 	<groupId>com.github.resources</groupId>
 	<artifactId>resource-bunch</artifactId>
-	<version>1.4</version>
+	<version>1.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -21,7 +21,7 @@
 		<url>https://github.com/miracelwhipp/resource-bunch.git</url>
 		<connection>scm:git:https://github.com/miracelwhipp/resource-bunch.git</connection>
 		<developerConnection>scm:git:https://github.com/miracelwhipp/resource-bunch.git</developerConnection>
-		<tag>1.4</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
