@@ -1,4 +1,9 @@
+
+os: linux
+dist: trusty
+
 language: java
+
 env:
   global:
   - secure: "H3mWnPy1yE9rwxUFBJTQCkylm3aTv4o4nBSQONjMhKJp6aVaP6CxwEXEncyPrHUlrRasbF8AbNuC9ZURtkC58lbSqzWLK2t/XqITPtOfjx59eqwHrS9khTPI+9hJzvvZL8y3pozt0vvLqg6s22l2WkwFsXez04qc9WZvF/SOHZadumb7q6pD0eAXHnsCnGUSZUZQyvfxVsGdsvArwTVg3U5mDoSUmJhjXonwGw9eRGMdP4+9vJDT3auvYvLj6EPDyqlxXNVsWwrCQAKRsl0xhmDLsoz2NJLPS1F75YiVQtQ7DK/twxUrzQYYzy1WUP4e+DC5Wk/VO26/7ePMtcq4xwCFW0t6HxLeMpVVDNZvSfqAoCIH55wj8IKwtSHkNm20HVnuzndjvQJuWvN6pYfI1JrDzGicr1T++4fHuGYBgBWScgmNuXoVQ3FHnqW8ttdTyYT1BebT/aHKjVwkmJalvjFx0I8w87C/7Wth+OW898XUZ6DbIkAZ1m6S3KBiQpE7zknaQovpANsqj5/kEAHulvWeQwkg3UuDBLKICtZDvrh5MaUDf+6FB3mJvNeJkizJfiDzgUKHi6nUOjgHAG4MxEAISEtBIXq+iFXZmUlCoIeI32cmOz2bSwGoYauHIgVuIH44YOzhMKhdZ5h64TvZq/3U0Fxe86/zpAMXiD2MfbY="
@@ -9,9 +14,11 @@ env:
   - # OSSRH_JIRA_USERNAME
   - secure: "iR4l00xMKOXm18cGaqVt38t3INvdTws9JoPypBYxc1dXh0sBzur1YFIcYUbtUT+i0KO0J8XV3X4bwLy3/tlVyO4mk9RngSI5TgNdAnXhqRxTOkZvUxgo3fG5Wtp2kttauMt127O2R382rsrlO1y17oYDbH4Qe6V/2ItdgQ1yy1Mpr2DUEiiSNRRWgGBYkUCO4juqt9a26n9C2sRhxw+WwAKcm/aKAGhDeViyIdbLrek9wMSHp49YZcHOwlE6ROYRbzCA+gA18vAwhcff/Qduk3PklQu9u6u7zPwTZ7uqSnQCyNmrCOjxdi+Oqn39T+qM7khwfatO2jdLZlz9yBVg5KFo3f++v9f8apj21FkwLhLP6X6QCS6e6SYst3a2qsPliz0ZHMwkYIKrpDWeY7sCqDIFU+FS0riQqCOu6OqftF/uPG5Qq5LVjozIE+dHPsJacQS5bpAR0Enp/wY9aDPz8A4GsOx4jeswv57xj7Bxbzoq3awQrHdKU7zPsMBfwGDBI3toEVtikm6gJTirxjBxO27r4QXLSMrLFD+7yx0VyJ9AAoGxtSUseqCfIqz3sAwyZEgZaKPKmKJe9S/tt3dzaCyCyHA8yn7/NjFdZ7wzg+i9wQHVHOQSk03uLY9K3xZ9KcGZEISDeG9fFzwzFZYfBenZl2mjboKqXFdOhhj8fzs="
   - # OSSRH_JIRA_PASSWORD
+
 cache:
   directories:
   - ~/.m2/repository
+
 after_success:
 - ./deployment/before-deploy.sh
 - ./deployment/deploy.sh
