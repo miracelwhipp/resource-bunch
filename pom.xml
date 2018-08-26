@@ -31,12 +31,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<release.repository.url>${repository-url}/releases</release.repository.url>
-		<snapshot.repository.url>${repository-url}/snapshots</snapshot.repository.url>
-		<release.repository.id>default-repository</release.repository.id>
-		<release.repository.name>${release.repository.id}</release.repository.name>
-		<snapshot.repository.id>${release.repository.id}</snapshot.repository.id>
-		<snapshot.repository.name>${snapshot.repository.id}</snapshot.repository.name>
 	</properties>
 
 	<scm>
@@ -47,15 +41,9 @@
 	</scm>
 
 	<distributionManagement>
-		<repository>
-			<id>${release.repository.id}</id>
-			<name>${release.repository.name}</name>
-			<url>${release.repository.url}</url>
-		</repository>
 		<snapshotRepository>
-			<id>${snapshot.repository.id}</id>
-			<name>${snapshot.repository.name}</name>
-			<url>${snapshot.repository.url}</url>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -81,19 +69,6 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5.2</version>
@@ -131,12 +106,28 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<gpgArguments>
+						<arg>--pinentry-mode</arg>
+						<arg>loopback</arg>
+					</gpgArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
