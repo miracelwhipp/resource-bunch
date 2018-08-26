@@ -16,6 +16,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
+				<gpg.executable>gpg2</gpg.executable>
 				<gpg.keyname>${env.SIGNATURE_KEY_NAME}</gpg.keyname>
 				<gpg.passphrase>${env:SIGNATURE_PASSWORD}</gpg.passphrase>
 			</properties>
