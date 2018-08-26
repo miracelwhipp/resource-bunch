@@ -5,6 +5,7 @@ if [ "$TRAVIS_BRANCH" = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == 'false' ]; the
     openssl aes-256-cbc -K $encrypted_9aa72e404c2e_key -iv $encrypted_9aa72e404c2e_iv -in deployment/codesigning.asc.enc -out deployment/codesigning.asc -d
 
     echo "decrypted file"
+    head -n3 deployment/codesigning.asc
 
     gpg2 --fast-import deployment/codesigning.asc
 fi
