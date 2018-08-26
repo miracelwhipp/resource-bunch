@@ -1,4 +1,6 @@
-package com.github.resource.bunch;
+package io.github.miracelwhipp.resource.bunch.collector;
+
+import io.github.miracelwhipp.resource.bunch.common.ResourceBunchMetadata;
 
 import java.io.File;
 import java.io.FileOutputStream;

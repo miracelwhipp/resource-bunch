@@ -3,11 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.github.resources</groupId>
+		<groupId>io.github.miracelwhipp.resource.bunch</groupId>
 		<artifactId>resource-bunch</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>2.0-SNAPSHOT</version>
 	</parent>
 
+	<groupId>io.github.miracelwhipp.resource.bunch.plugin</groupId>
 	<artifactId>resource-bunch-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 
@@ -24,7 +25,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.resources</groupId>
+			<groupId>io.github.miracelwhipp.resource.bunch.collector</groupId>
 			<artifactId>resource-bunch-collector</artifactId>
 			<version>${project.version}</version>
 		</dependency>

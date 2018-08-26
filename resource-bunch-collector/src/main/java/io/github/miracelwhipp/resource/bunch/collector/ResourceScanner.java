@@ -1,4 +1,4 @@
-package com.github.resource.bunch;
+package io.github.miracelwhipp.resource.bunch.collector;
 
 import java.io.File;
 import java.util.ArrayList;

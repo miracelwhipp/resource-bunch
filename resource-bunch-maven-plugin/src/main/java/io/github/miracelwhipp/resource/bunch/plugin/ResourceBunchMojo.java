@@ -1,4 +1,4 @@
-package com.github.resource.bunch;
+package io.github.miracelwhipp.resource.bunch.plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import io.github.miracelwhipp.resource.bunch.collector.Filter;
+import io.github.miracelwhipp.resource.bunch.collector.ResourceCollector;
+import io.github.miracelwhipp.resource.bunch.collector.ResourceScanner;
+import io.github.miracelwhipp.resource.bunch.common.ResourceBunchMetadata;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
