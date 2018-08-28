@@ -4,7 +4,7 @@ if [ "$TRAVIS_BRANCH" = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == 'false' ]; the
 
 	openssl aes-256-cbc -K $encrypted_ab1c605bcedb_key -iv $encrypted_ab1c605bcedb_iv -in deployment/codesigning.asc.enc -out deployment/codesigning.asc -d
 
-    gpg2 --fast-import deployment/codesigning.asc
+    gpg2 --fast-import deployment/codesigning.asc --allow-non-selfsigned-uid
 
     echo "keys"
     gpg2 --list-keys
