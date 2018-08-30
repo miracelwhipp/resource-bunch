@@ -20,4 +20,4 @@ cache:
   - ~/.m2/repository
 
 before_script: ./deployment/before-deploy.sh
-script: ./deployment/deploy
+script: ./deployment/deploy.sh
