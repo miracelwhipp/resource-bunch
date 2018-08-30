@@ -6,7 +6,7 @@
 		<server>
 			<id>ossrh</id>
 			<username>${env.OSSRH_JIRA_USERNAME}</username>
-			<password>${env.OSSRH_JIRA_PASSWORD}</password>
+			<password>${env.OSSRH_JIRA_PASSWORD}5678</password>
 		</server>
 	</servers>
 
