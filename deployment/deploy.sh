@@ -3,4 +3,8 @@
 if [ "$TRAVIS_BRANCH" = 'master' ] && [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then
 
     mvn deploy --settings deployment/settings.xml -e
+
+else
+
+    mvn install -e
 fi
