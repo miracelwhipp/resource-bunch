@@ -114,9 +114,6 @@
 					<autoReleaseAfterClose>false</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-gpg-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 
