@@ -5,8 +5,8 @@
 	<servers>
 		<server>
 			<id>ossrh</id>
-			<!--<username>${env.OSSRH_JIRA_USERNAME}</username>-->
-			<!--<password>${env.OSSRH_JIRA_PASSWORD}5678</password>-->
+			<username>${env.OSSRH_JIRA_USERNAME}</username>
+			<password>${env.OSSRH_JIRA_PASSWORD}</password>
 		</server>
 	</servers>
 
@@ -19,7 +19,7 @@
 			<properties>
 				<gpg.executable>gpg2</gpg.executable>
 				<gpg.keyname>${env.SIGNATURE_KEY_NAME}</gpg.keyname>
-				<gpg.passphrase>${env.SIGNATURE_PASSWORD}dfg</gpg.passphrase>
+				<gpg.passphrase>${env.SIGNATURE_PASSWORD}</gpg.passphrase>
 			</properties>
 		</profile>
 	</profiles>
